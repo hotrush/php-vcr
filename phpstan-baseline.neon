@@ -1,27 +1,36 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Access to an undefined property object\\:\\:\\$data\\.$#"
-			count: 2
-			path: src/VCR/CodeTransform/AbstractCodeTransform.php
+			message: "#^Property VCR\\\\LibraryHooks\\\\CurlHook\\:\\:\\$multiExecLastChs type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/VCR/LibraryHooks/CurlHook.php
 
 		-
-			message: "#^Access to an undefined property object\\:\\:\\$datalen\\.$#"
+			message: "#^Property VCR\\\\LibraryHooks\\\\CurlHook\\:\\:\\$multiHandles type has no value type specified in iterable type array\\.$#"
 			count: 1
-			path: src/VCR/CodeTransform/AbstractCodeTransform.php
+			path: src/VCR/LibraryHooks/CurlHook.php
 
 		-
-			message: "#^Parameter \\#1 \\$string of function substr expects string, string\\|false given\\.$#"
+			message: "#^Parameter \\#2 \\$length of function fread expects int\\<0, max\\>, int given\\.$#"
 			count: 1
-			path: src/VCR/Util/HttpUtil.php
+			path: src/VCR/Util/StreamProcessor.php
 
 		-
-			message: "#^Cannot call method record\\(\\) on VCR\\\\Cassette\\|null\\.$#"
+			message: "#^Parameter \\#2 \\$size of function ftruncate expects int\\<0, max\\>, int given\\.$#"
 			count: 1
-			path: src/VCR/Videorecorder.php
+			path: src/VCR/Util/StreamProcessor.php
 
 		-
-			message: "#^Parameter \\#3 \\$cassette of class VCR\\\\Event\\\\BeforeRecordEvent constructor expects VCR\\\\Cassette, VCR\\\\Cassette\\|null given\\.$#"
-			count: 1
-			path: src/VCR/Videorecorder.php
+			message: "#^Property VCR\\\\Util\\\\StreamProcessor\\:\\:\\$context \\(resource\\) in isset\\(\\) is not nullable\\.$#"
+			count: 6
+			path: src/VCR/Util/StreamProcessor.php
 
+		-
+			message: "#^Method VCR\\\\VCRFactory\\:\\:createStorage\\(\\) should return VCR\\\\Storage\\\\Storage but returns object\\.$#"
+			count: 1
+			path: src/VCR/VCRFactory.php
+
+		-
+			message: "#^Call to function file_get_contents\\(\\) on a separate line has no effect\\.$#"
+			count: 1
+			path: tests/Unit/VCRTest.php

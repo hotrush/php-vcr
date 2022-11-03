@@ -56,7 +56,7 @@ class SoapHook implements LibraryHook
         $vcrRequest->setBody($request);
 
         if (!empty($options['login'])) {
-            $vcrRequest->setAuthorization($options['login'], $options['password']);
+            $vcrRequest->setAuthorization((string) $options['login'], (string) $options['password']);
         }
 
         /* @var \VCR\Response $response */
