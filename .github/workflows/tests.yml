@@ -58,7 +58,6 @@ jobs:
       fail-fast: true
       matrix:
         php: ["8.0", "8.1", "8.2"]
-        composer_flags: ["", "--prefer-lowest"]
 
     name: "Tests PHP ${{ matrix.php }} ${{ matrix.composer_flags}}"
 
@@ -67,6 +66,8 @@ jobs:
     steps:
       - name: "Checkout code"
         uses: "actions/checkout@v2"
+        with:
+          fetch-depth: 10
 
       - name: "Setup PHP"
         uses: "shivammathur/setup-php@v2"
@@ -80,7 +81,7 @@ jobs:
         run: "composer validate --strict"
 
       - name: "Install dependencies"
-        run: "composer update -o ${{ matrix.composer_flags }} --prefer-dist --no-interaction --no-progress"
+        run: "composer update -o --prefer-dist --no-interaction --no-progress"
 
       - name: "Execute tests"
         run: "vendor/bin/phpunit --coverage-clover=coverage.clover"

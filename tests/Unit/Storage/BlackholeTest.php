@@ -33,7 +33,7 @@ final class BlackholeTest extends TestCase
 
     public function testNextIsCallable(): void
     {
-        $this->assertNull($this->storage->next());
+        $this->storage->next();
     }
 
     /**

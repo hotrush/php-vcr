@@ -138,7 +138,7 @@ class StreamProcessor
     public function stream_open(string $path, string $mode, int $options, ?string &$openedPath): bool
     {
         // file_exists catches paths like /dev/urandom that are missed by is_file.
-        if ('r' === substr($mode, 0, 1) && !file_exists($path)) {
+        if (str_starts_with($mode, 'r') && !file_exists($path)) {
             return false;
         }
 
@@ -517,9 +517,9 @@ class StreamProcessor
             case \STREAM_OPTION_READ_BUFFER:
                 // stream_set_read_buffer returns 0 in case of success
                 return 0 === stream_set_read_buffer($this->resource, $arg1);
-            // STREAM_OPTION_CHUNK_SIZE does not exist at all in PHP 7
-            /*case STREAM_OPTION_CHUNK_SIZE:
-                return stream_set_chunk_size($this->resource, $arg1);*/
+                // STREAM_OPTION_CHUNK_SIZE does not exist at all in PHP 7
+                /*case STREAM_OPTION_CHUNK_SIZE:
+                    return stream_set_chunk_size($this->resource, $arg1);*/
         }
 
         return false;
@@ -528,13 +528,13 @@ class StreamProcessor
     /**
      * Write to stream.
      *
-     * @throws \BadMethodCallException if called, because this method is not applicable for this stream
-     *
      * @see http://www.php.net/manual/en/streamwrapper.stream-write.php
      *
      * @param string $data should be stored into the underlying stream
      *
      * @return int|false
+     *
+     * @throws \BadMethodCallException if called, because this method is not applicable for this stream
      */
     public function stream_write(string $data)
     {
