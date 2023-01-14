@@ -11,6 +11,7 @@ use VCR\Event\BeforeRecordEvent;
 use VCR\Request;
 use VCR\Response;
 use VCR\Storage;
+use VCR\Util\Encrypter;
 
 final class BeforeRecordEventTest extends TestCase
 {
@@ -21,7 +22,12 @@ final class BeforeRecordEventTest extends TestCase
         $this->event = new BeforeRecordEvent(
             new Request('GET', 'http://example.com'),
             new Response('200'),
-            new Cassette('test', new Configuration(), new Storage\Blackhole())
+            new Cassette(
+                'test',
+                $config = new Configuration(),
+                new Storage\Blackhole(),
+                new Encrypter($config)
+            )
         );
     }
 

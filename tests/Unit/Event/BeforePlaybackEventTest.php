@@ -10,6 +10,7 @@ use VCR\Configuration;
 use VCR\Event\BeforePlaybackEvent;
 use VCR\Request;
 use VCR\Storage;
+use VCR\Util\Encrypter;
 
 final class BeforePlaybackEventTest extends TestCase
 {
@@ -19,7 +20,12 @@ final class BeforePlaybackEventTest extends TestCase
     {
         $this->event = new BeforePlaybackEvent(
             new Request('GET', 'http://example.com'),
-            new Cassette('test', new Configuration(), new Storage\Blackhole())
+            new Cassette(
+                'test',
+                $config = new Configuration(),
+                new Storage\Blackhole(),
+                new Encrypter($config)
+            )
         );
     }
 

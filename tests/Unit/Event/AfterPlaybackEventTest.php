@@ -11,6 +11,7 @@ use VCR\Event\AfterPlaybackEvent;
 use VCR\Request;
 use VCR\Response;
 use VCR\Storage;
+use VCR\Util\Encrypter;
 
 final class AfterPlaybackEventTest extends TestCase
 {
@@ -21,7 +22,12 @@ final class AfterPlaybackEventTest extends TestCase
         $this->event = new AfterPlaybackEvent(
             new Request('GET', 'http://example.com'),
             new Response('200'),
-            new Cassette('test', new Configuration(), new Storage\Blackhole())
+            new Cassette(
+                'test',
+                $config = new Configuration(),
+                new Storage\Blackhole(),
+                new Encrypter($config)
+            )
         );
     }
 

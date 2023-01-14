@@ -7,6 +7,7 @@ namespace VCR;
 use VCR\LibraryHooks\CurlHook;
 use VCR\LibraryHooks\SoapHook;
 use VCR\Storage\Storage;
+use VCR\Util\Encrypter;
 use VCR\Util\StreamProcessor;
 
 class VCRFactory
@@ -67,6 +68,11 @@ class VCRFactory
         );
     }
 
+    protected function createEncrypter(): Encrypter
+    {
+        return new Encrypter($this->config);
+    }
+
     public static function getInstance(Configuration $config = null): self
     {
         if (!self::$instance) {
@@ -97,7 +103,7 @@ class VCRFactory
      *
      * @return mixed
      */
-    public function getOrCreate(string $className, array $params = [])
+    public function getOrCreate(string $className, array $params = []): mixed
     {
         $key = $className.implode('-', $params);
 
