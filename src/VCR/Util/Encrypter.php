@@ -22,6 +22,10 @@ class Encrypter
             : null;
     }
 
+    /**
+     * @param array<string, array<string, mixed>> $request
+     * @return array<string, array<string, mixed>>
+     */
     public function encryptRequestData(array $request): array
     {
         if (!$this->enabled) {
@@ -43,6 +47,10 @@ class Encrypter
         return $request;
     }
 
+    /**
+     * @param array<string, array<string, mixed>> $request
+     * @return array<string, array<string, mixed>>
+     */
     public function decryptRequestData(array $request): array
     {
         if (!$this->enabled) {
@@ -64,6 +72,9 @@ class Encrypter
         return $request;
     }
 
+    /**
+     * @return array<string, array<string>>
+     */
     private function getEncryptableRequestKeys(): array
     {
         return [
@@ -71,6 +82,11 @@ class Encrypter
         ];
     }
 
+    /**
+     * @param string $keyToMatch
+     * @param array<string> $keys
+     * @return bool
+     */
     private function keyMatches(string $keyToMatch, array $keys): bool
     {
         foreach ($keys as $key) {

@@ -124,6 +124,9 @@ class Configuration
 
     private string $encryptionKey = '';
 
+    /**
+     * @var string[]
+     */
     private array $sensitiveHeaders = ['authorization'];
 
     private string $mode = VCR::MODE_NEW_EPISODES;
@@ -341,6 +344,10 @@ class Configuration
         return $this->encryptionKey;
     }
 
+    /**
+     * @param array<string> $headers
+     * @return $this
+     */
     public function setSensitiveHeaders(array $headers): self
     {
         $this->sensitiveHeaders = $headers;
@@ -348,6 +355,9 @@ class Configuration
         return  $this;
     }
 
+    /**
+     * @return string[]
+     */
     public function getSensitiveHeaders(): array
     {
         return $this->sensitiveHeaders;
