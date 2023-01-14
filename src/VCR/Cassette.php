@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace VCR;
 
 use VCR\Storage\Storage;
+use VCR\Util\Encrypter;
 
 /**
  * A Cassette records and plays back pairs of Requests and Responses in a Storage.
@@ -17,7 +18,8 @@ class Cassette
     public function __construct(
         protected string $name,
         protected Configuration $config,
-        protected Storage $storage
+        protected Storage $storage,
+        protected Encrypter $encrypter,
     ) {
     }
 
@@ -29,7 +31,9 @@ class Cassette
     public function playback(Request $request): ?Response
     {
         foreach ($this->storage as $recording) {
-            $storedRequest = Request::fromArray($recording['request']);
+            $storedRequest = Request::fromArray(
+                $this->encrypter->decryptRequestData($recording['request'])
+            );
             if ($storedRequest->matches($request, $this->getRequestMatchers())) {
                 return Response::fromArray($recording['response']);
             }
@@ -45,7 +49,7 @@ class Cassette
         }
 
         $this->storage->storeRecording([
-            'request' => $request->toArray(),
+            'request' => $this->encrypter->encryptRequestData($request->toArray()),
             'response' => $response->toArray(),
         ]);
     }

@@ -113,8 +113,9 @@ class Videorecorder
         }
 
         $storage = $this->factory->get('Storage', [$cassetteName]);
+        $encrypter = $this->factory->get('Encrypter');
 
-        $this->cassette = new Cassette($cassetteName, $this->config, $storage);
+        $this->cassette = new Cassette($cassetteName, $this->config, $storage, $encrypter);
         $this->enableLibraryHooks();
     }
 

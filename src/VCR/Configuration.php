@@ -89,7 +89,7 @@ class Configuration
      *
      * @var array<string,callable(Request, Request):bool> List of RequestMatcher names and callbacks
      */
-    private $availableRequestMatchers = [
+    private array $availableRequestMatchers = [
         'method' => [RequestMatcher::class, 'matchMethod'],
         'url' => [RequestMatcher::class, 'matchUrl'],
         'host' => [RequestMatcher::class, 'matchHost'],
@@ -110,7 +110,7 @@ class Configuration
      *
      * @var string[] a whitelist is a list of paths
      */
-    private $whiteList = [];
+    private array $whiteList = [];
 
     /**
      * A blacklist is a list of paths which may not be processed for code transformation.
@@ -120,7 +120,11 @@ class Configuration
      *
      * @var string[] a blacklist is a list of paths
      */
-    private $blackList = ['src/VCR/LibraryHooks/', 'src/VCR/Util/SoapClient', 'tests/VCR/Filter'];
+    private array $blackList = ['src/VCR/LibraryHooks/', 'src/VCR/Util/SoapClient', 'tests/VCR/Filter'];
+
+    private string $encryptionKey = '';
+
+    private array $sensitiveHeaders = ['authorization'];
 
     private string $mode = VCR::MODE_NEW_EPISODES;
 
@@ -322,6 +326,31 @@ class Configuration
         $this->mode = $mode;
 
         return $this;
+    }
+
+    public function setEncryptionKey(string $key): self
+    {
+        Assertion::minLength($key, 5, "An encryption key must be at least5 characters long.");
+        $this->encryptionKey = $key;
+
+        return $this;
+    }
+
+    public function getEncryptionKey(): string
+    {
+        return $this->encryptionKey;
+    }
+
+    public function setSensitiveHeaders(array $headers): self
+    {
+        $this->sensitiveHeaders = $headers;
+
+        return  $this;
+    }
+
+    public function getSensitiveHeaders(): array
+    {
+        return $this->sensitiveHeaders;
     }
 
     /**
